@@ -1,4 +1,5 @@
 import fastify from 'fastify'
+import { ZodError } from 'zod'
 import { AppError } from './utils/app-error'
 import { jwtPlugin } from './plugins/jwt'
 import { swaggerPlugin } from './plugins/swagger'
@@ -21,6 +22,16 @@ app.setErrorHandler((error, _request, reply) => {
   if (error instanceof AppError) {
     return reply.status(error.statusCode).send({
       error: error.message,
+    })
+  }
+
+  if (error instanceof ZodError) {
+    return reply.status(400).send({
+      error: 'Dados inválidos',
+      issues: error.issues.map((i) => ({
+        path: i.path.join('.'),
+        message: i.message,
+      })),
     })
   }
 

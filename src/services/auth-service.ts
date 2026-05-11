@@ -9,7 +9,7 @@ export async function registerService(data: RegisterDTO) {
   const existingUser = await getUserByEmail(data.email)
 
   if(existingUser){
-    throw new AppError("Email já cadastrado", 408)
+    throw new AppError("Email já cadastrado", 409)
   }
 
   const hashedPassword = await bcrypt.hash(data.password, 8)

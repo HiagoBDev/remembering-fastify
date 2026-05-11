@@ -23,8 +23,8 @@ export const productParamsSchema = z.object({
 
 export const productQuerySchema = z.object({
   categoryId: z.uuid().optional(),
-  minPrice: z.number().positive().optional(),
-  maxPrice: z.number().positive().optional(),
+  minPrice: z.coerce.number().positive().optional(),
+  maxPrice: z.coerce.number().positive().optional(),
 })
 
 export type CreateProductDTO = z.infer<typeof createProductSchema>
