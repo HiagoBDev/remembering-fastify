@@ -30,7 +30,7 @@ export async function loginService(data:LoginDTO, app: FastifyInstance) {
     throw new AppError("Credenciais inválidas", 401)
   }
 
-  const passwordMatch = bcrypt.compare(data.password, user.password)
+  const passwordMatch = await bcrypt.compare(data.password, user.password)
 
   if (!passwordMatch) {
     throw new AppError("Credenciais inválidas", 401)
